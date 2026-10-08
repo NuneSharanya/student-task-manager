@@ -1,0 +1,13 @@
+{
+  "name": "student-task-manager",
+  "version": "1.0.0",
+  "description": "A Dockerized Student Task Manager with CI/CD",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
