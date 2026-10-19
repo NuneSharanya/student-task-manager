@@ -1,4 +1,3 @@
-```groovy
 pipeline {
     agent any
 
@@ -29,10 +28,8 @@ pipeline {
 
         stage('Deploy Application') {
             steps {
-                bat '''
-                docker rm -f student-task-manager-deploy 2>nul
-                docker run -d --name student-task-manager-deploy -p 3001:3000 student-task-manager:latest
-                '''
+                bat 'docker rm -f student-task-manager-deploy 2>nul'
+                bat 'docker run -d --name student-task-manager-deploy -p 3001:3000 student-task-manager:latest'
             }
         }
     }
