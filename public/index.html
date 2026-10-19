@@ -1,209 +1,88 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>TaskFlow - Student Task Manager</title>
-
-    <link rel="stylesheet" href="style.css">
+    <title>TaskFlow | Dashboard</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/script.js" defer></script>
 </head>
 
 <body>
+    <header class="topbar">
+        <a class="brand" href="/index.html">TaskFlow</a>
 
-<div class="app">
+        <div class="profile-section">
+            <div class="profile">
+                <div class="profile-avatar" id="userAvatar">S</div>
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-
-        <div class="logo">
-            <div class="logo-icon">✓</div>
-            <div>
-                <h2>TaskFlow</h2>
-                <span>Student Manager</span>
-            </div>
-        </div>
-
-        <nav>
-            <button onclick="showAllTasks()">📊 Dashboard</button>
-            <button onclick="focusTaskInput()">➕ Add Task</button>
-            <button onclick="setFilter('all')">📋 All Tasks</button>
-            <button onclick="setFilter('pending')">⏳ Pending</button>
-            <button onclick="setFilter('completed')">✅ Completed</button>
-        </nav>
-
-        <div class="profile">
-            <div class="profile-avatar">S</div>
-            <div>
-                <strong>Student</strong>
-                <small>Task Manager</small>
-            </div>
-        </div>
-
-    </aside>
-
-
-    <!-- Main Content -->
-    <main class="main">
-
-        <header class="topbar">
-
-            <div>
-                <h1>Dashboard</h1>
-                <p>Manage your tasks and stay productive.</p>
+                <div class="profile-info">
+                    <strong id="displayUsername">Student</strong>
+                    <small>Student account</small>
+                </div>
             </div>
 
-            <button class="theme-btn" onclick="toggleDarkMode()">
-                🌙
+            <button
+                id="logoutButton"
+                type="button"
+                class="logout-button"
+            >
+                Logout
             </button>
+        </div>
+    </header>
 
-        </header>
+    <main class="container">
+        <section class="welcome">
+            <p class="eyebrow">STUDENT WORKSPACE</p>
+            <h1>My Dashboard</h1>
+            <p>Organize your work and keep track of your progress.</p>
+        </section>
 
-
-        <!-- Statistics -->
         <section class="stats">
+            <article class="stat-card">
+                <span>Total Tasks</span>
+                <strong id="totalTasks">0</strong>
+            </article>
 
-            <div class="stat-card">
-                <div class="stat-icon">📋</div>
-                <div>
-                    <span>Total Tasks</span>
-                    <h2 id="totalTasks">0</h2>
-                </div>
-            </div>
+            <article class="stat-card">
+                <span>Completed</span>
+                <strong id="completedTasks">0</strong>
+            </article>
 
-            <div class="stat-card">
-                <div class="stat-icon">⏳</div>
-                <div>
-                    <span>Pending</span>
-                    <h2 id="pendingTasks">0</h2>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-icon">✅</div>
-                <div>
-                    <span>Completed</span>
-                    <h2 id="completedTasks">0</h2>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-icon">📈</div>
-                <div>
-                    <span>Progress</span>
-                    <h2 id="progressPercent">0%</h2>
-                </div>
-            </div>
-
+            <article class="stat-card">
+                <span>Pending</span>
+                <strong id="pendingTasks">0</strong>
+            </article>
         </section>
 
+        <section class="task-panel">
+            <h2>Add a New Task</h2>
 
-        <!-- Progress -->
-        <section class="progress-card">
-
-            <div class="progress-header">
-                <div>
-                    <h3>Overall Progress</h3>
-                    <p>Keep completing your tasks!</p>
-                </div>
-
-                <strong id="progressText">0%</strong>
-            </div>
-
-            <div class="progress-bar">
-                <div id="progressFill"></div>
-            </div>
-
-        </section>
-
-
-        <!-- Add Task -->
-        <section class="task-form-card">
-
-            <h2>Create New Task</h2>
-
-            <div class="task-form">
-
+            <form id="taskForm" class="task-form">
                 <input
+                    id="taskTitle"
                     type="text"
-                    id="taskInput"
                     placeholder="Enter your task..."
+                    maxlength="200"
+                    required
                 >
+                <button type="submit">Add Task</button>
+            </form>
 
-                <select id="priorityInput">
-                    <option value="Low">Low Priority</option>
-                    <option value="Medium" selected>Medium Priority</option>
-                    <option value="High">High Priority</option>
-                </select>
-
-                <select id="categoryInput">
-                    <option value="Assignment">Assignment</option>
-                    <option value="Project">Project</option>
-                    <option value="Exam">Exam</option>
-                    <option value="Personal">Personal</option>
-                </select>
-
-                <button onclick="addTask()" class="add-btn">
-                    ➕ Add Task
-                </button>
-
-            </div>
-
+            <p id="taskMessage" role="status"></p>
         </section>
 
-
-        <!-- Task List -->
-        <section class="tasks-card">
-
-            <div class="tasks-header">
-
-                <div>
-                    <h2>My Tasks</h2>
-                    <p>Your current tasks</p>
-                </div>
-
-                <div class="task-controls">
-
-                    <input
-                        type="text"
-                        id="searchInput"
-                        placeholder="🔍 Search tasks..."
-                        oninput="displayTasks()"
-                    >
-
-                    <select
-                        id="filterInput"
-                        onchange="displayTasks()"
-                    >
-                        <option value="all">All</option>
-                        <option value="pending">Pending</option>
-                        <option value="completed">Completed</option>
-                        <option value="High">High Priority</option>
-                        <option value="Medium">Medium Priority</option>
-                        <option value="Low">Low Priority</option>
-                    </select>
-
-                </div>
-
-            </div>
-
-
-            <div id="taskList"></div>
-
-            <div id="emptyState" class="empty-state">
-                <div>📝</div>
-                <h3>No tasks yet</h3>
-                <p>Add your first task to get started.</p>
-            </div>
-
+        <section class="task-panel">
+            <h2>My Tasks</h2>
+            <ul id="taskList" class="task-list"></ul>
+            <p id="emptyMessage">No tasks yet. Add your first task!</p>
         </section>
-
     </main>
 
-</div>
-
-
-<script src="script.js"></script>
-
+    <footer>
+        Student Task Manager · Automated CI/CD Project
+    </footer>
 </body>
 </html>

@@ -1,11 +1,12 @@
+
 {
   "name": "student-task-manager",
   "version": "1.0.0",
-  "description": "A Dockerized Student Task Manager with CI/CD",
+  "description": "Student Task Manager with a Jenkins and Docker CI/CD pipeline",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"No tests specified\" && exit 0"
+    "test": "node --check server.js && node --check public/script.js"
   },
   "dependencies": {
     "express": "^4.21.2"
